@@ -14,3 +14,11 @@ export const getList = async () => {
   ]);
   return { total, data };
 };
+
+export const getById = async (id) => {
+  return Purchase.findById(id).select("-__v -createdAt -updatedAt -deleted");
+};
+
+export const findAndUpdate = async (id, payload) => {
+  return Purchase.findByIdAndUpdate(id, payload, { new: true });
+};
