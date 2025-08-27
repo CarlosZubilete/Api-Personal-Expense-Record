@@ -51,3 +51,17 @@ export const updateOne = async (req, res) => {
     res.status(400).json({ error: e.message });
   }
 };
+
+export const deleteOne = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await purchaseService.findAndDelete(id, { deleted: true });
+    if (!result)
+      return res
+        .status(404)
+        .json({ success: false, message: "Purchase not found" });
+    else res.status(200).json({ success: true, message: "Purchase deleted" });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+};

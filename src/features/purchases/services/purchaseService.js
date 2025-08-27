@@ -22,3 +22,7 @@ export const getById = async (id) => {
 export const findAndUpdate = async (id, payload) => {
   return Purchase.findByIdAndUpdate(id, payload, { new: true });
 };
+
+export const findAndDelete = async (id, payload) => {
+  return Purchase.findByIdAndUpdate(id, payload, { new: true });
+};

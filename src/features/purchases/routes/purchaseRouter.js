@@ -7,6 +7,6 @@ router.post("/new", purchaseCTRL.create);
 router.get("/", purchaseCTRL.findCollection);
 router.get("/:id", purchaseCTRL.findOne);
 router.patch("/:id", purchaseCTRL.updateOne);
-// router.delete("/:id", purchaseCTRL.delete);
+router.delete("/:id", purchaseCTRL.deleteOne);
 
 export default router;
