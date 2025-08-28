@@ -13,8 +13,8 @@ const purchaseSchema = new mongoose.Schema(
     },
     category: {
       type: String,
+      default: "default",
       required: false,
-      default: "",
     },
     deleted: {
       type: Boolean,

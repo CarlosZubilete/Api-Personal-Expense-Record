@@ -5,4 +5,5 @@ export default {
   port: process.env.PORT || 3000,
   mongoUri: process.env.MONGO_URI,
   nodeEnv: process.env.NODE_ENV || "development",
+  salt_rounds: process.env.SALT_ROUNDS || 10,
 };
