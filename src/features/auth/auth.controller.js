@@ -36,9 +36,9 @@ export const login = async (req, res, next) => {
       return res
         .status(401)
         .json({ ok: false, message: "Invalid credentials" });
-    return res.json({ ok: true, data: result.payload });
+    // return res.json({ ok: true, data: result.payload });
     //  enviar token en httpOnly cookie (más seguro) o en body si es API pura
-    //return res.json({ ok: true, token: result.token });
+    return res.json({ ok: true, token: result.token });
   } catch (err) {
     next(err);
   }

@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema(
     passwordHash: { type: String, required: true },
     name: { type: String },
     role: { type: String, default: "user" },
+    deleted: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
