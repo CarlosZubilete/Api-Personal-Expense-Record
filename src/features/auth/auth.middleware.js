@@ -1,5 +1,22 @@
-// import jwt from "jsonwebtoken";
-// import config from "../config/index.js";
+import jwt from "jsonwebtoken";
+import config from "../../config/index.js";
+
+export default function verifyLogin(req, res, next) {
+  const authHeader = req.headers.authorization;
+  //console.log(authHeader);
+  if (!authHeader)
+    return res.status(401).json({ ok: false, message: "No token" });
+  try {
+    const token = authHeader.split(" ")[1]; // "Bearer <token>"
+    //console.log(token);
+    const payload = jwt.verify(token, config.jwtSign); // print the same value jwt.io
+    // console.log(payload);
+    req.user = payload; //  sub, username, role...
+    next();
+  } catch (err) {
+    return res.status(401).json({ ok: false, message: "Invalid token" });
+  }
+}
 
 // export default function authMiddleware(req, res, next) {
 //   const authHeader = req.headers.authorization;
