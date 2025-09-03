@@ -2,7 +2,8 @@ import User from "../models/auth.model.user.js";
 import bcrypt from "bcryptjs";
 import config from "../../../config/index.js";
 import jwt from "jsonwebtoken";
-import Token from "../models/auth.model.token.js";
+// import Token from "../models/auth.model.token.js";
+// import * as tokenService from "./token.service";
 
 export const createUser = async ({ username, password, email, name }) => {
   const passwordHash = await bcrypt.hash(password, config.saltRounds);
@@ -26,12 +27,13 @@ export const authenticate = async (username, password) => {
   const token = jwt.sign(payload, config.jwtSign, { expiresIn: "1h" });
 
   // save token in a whitelist
-  const tokenDoc = new Token({ user_id: user._id, token });
-  await tokenDoc.save(); // todo: error handling and create a service for tokens
+  //const tokenDoc = new Token({ user_id: user._id, token });
+  //await tokenDoc.save(); // todo: error handling and create a service for tokens
+  // await tokenService.createTokenDoc(user._id, token);
 
   return { user, token };
 };
 
-export const logout = async (id) => {
-  return Token.findByIdAndUpdate(id, { isActive: false }, { new: true });
-};
+// export const logout = async (id) => {
+//   return Token.findByIdAndUpdate(id, { isActive: false }, { new: true });
+// };

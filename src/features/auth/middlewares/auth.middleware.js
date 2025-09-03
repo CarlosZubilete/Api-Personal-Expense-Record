@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import config from "../../../config/index.js";
-import Token from "../models/auth.model.token.js";
+// import Token from "../models/auth.model.token.js";
+import * as tokenService from "../services/token.service.js";
 import User from "../models/auth.model.user.js";
 import { userSchemaValidator } from "../validators/validador.model.user.js";
 import { loginSchemaValidator } from "../validators/validator.model.login.js";
@@ -39,24 +40,23 @@ export const validateUser = async (req, res, next) => {
   next();
 };
 
-//export async function verifyLogin(req, res, next) {
 export const verifyToken = async (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  //console.log(authHeader);
-  if (!authHeader)
-    return res.status(401).json({ ok: false, message: "No token" });
+  // const authHeader = req.headers.authorization;
+  // console.log(authHeader);
+  // if (!authHeader)
+  //   return res.status(401).json({ ok: false, message: "No token" });
   try {
-    const token = authHeader.split(" ")[1]; // "Bearer <token>"
+    // const token = authHeader.split(" ")[1]; // "Bearer <token>"
     //console.log(token);
+    const token = req.cookies.access_token;
+    // console.log(token);
+    if (!token) return res.status(403).json({ ok: false, message: "No token" });
+
     const payload = jwt.verify(token, config.jwtSign); // print the same value jwt.io
     // console.log(payload);
 
     // *Check if token is in whitelist*
-    const tokenDoc = await Token.findOne({
-      user_id: payload.sub,
-      token,
-      isActive: true,
-    });
+    const tokenDoc = await tokenService.findActiveToken(payload.sub, token);
 
     if (!tokenDoc)
       return res.status(401).json({ ok: false, message: "Invalid token" });

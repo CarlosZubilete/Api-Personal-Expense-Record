@@ -1,15 +1,10 @@
 import * as authService from "../services/auth.service.js";
+import * as tokenService from "../services/token.service.js";
 // import { validateUser } from "../auth.validators.js";
 
 export const register = async (req, res, next) => {
   try {
     const { username, password, email, name } = req.body;
-
-    // const validation = await validateUser({ username, password, email, name });
-    // if (validation.error) {
-    //   return res.status(400).json({ ok: false, errors: validation.error });
-    // }
-
     const user = await authService.createUser({
       username,
       password,
@@ -40,17 +35,37 @@ export const login = async (req, res, next) => {
         .status(401)
         .json({ ok: false, message: "Invalid credentials" });
 
-    // return res.json({ ok: true, data: result.payload });
-    //  enviar token en httpOnly cookie (más seguro) o en body si es API pura
+    // save token in a whitelist
+    const tokenDoc = await tokenService.createTokenDoc(
+      result.user._id,
+      result.token
+    );
+    if (!tokenDoc)
+      return res
+        .status(500)
+        .json({ ok: false, message: "Could not create token" });
 
-    return res.json({ ok: true, token: result.token });
+    //  send token en httpOnly cookie ...
+    res.cookie("access_token", result.token, {
+      httpOnly: true,
+      sameSite: "strict", // o 'lax'
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 1000, // 1hs en ms
+      // path: '/', domain: 'your-dns' , if you like
+    });
+
+    /* 
+    Note: if your frontend is on another domain, 
+    When you do Fetch/Axios you have to send credentials: 
+    'include' or withCredentials: true for the browser to attach cookies..
+    */
+    return res.json({ ok: true, username: result.user.username });
   } catch (err) {
     next(err);
   }
 };
 
 // maybe this must be another function
-
 export const logout = async (req, res, next) => {
   try {
     // verifyLogin req.tokenDoc y req.token
@@ -59,19 +74,19 @@ export const logout = async (req, res, next) => {
         .status(400)
         .json({ ok: false, message: "No active token found" });
     }
+    // clean cookie a at Client
+    res.clearCookie("access_token", {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    });
 
-    // console.log(req.token);
-    // change isActive
-    req.tokenDoc.isActive = false;
-    await req.tokenDoc.save();
-
-    // Limpiar cookie en el cliente
-    // res.clearCookie("token", {
-    //   httpOnly: true,
-    //   sameSite: "lax",
-    //   secure: process.env.NODE_ENV === "production",
-    // });
-
+    const result = await tokenService.invalidateToken(req.token);
+    if (!result) {
+      return res
+        .status(400)
+        .json({ ok: false, message: "Token could not be invalidated" });
+    }
     return res.json({ ok: true, message: "Logged out" });
   } catch (err) {
     next(err);
