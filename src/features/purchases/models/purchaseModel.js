@@ -11,10 +11,15 @@ const purchaseSchema = new mongoose.Schema(
       min: 0,
       required: true,
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
     category: {
-      type: String,
-      default: "default",
-      required: false,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "categories", //
+      required: false, // todo: create a default category "Un-categorized"
     },
     deleted: {
       type: Boolean,
@@ -25,3 +30,5 @@ const purchaseSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("purchases", purchaseSchema);
+
+// todo: all user will be a default category,

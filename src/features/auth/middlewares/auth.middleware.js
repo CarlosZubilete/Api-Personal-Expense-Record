@@ -74,6 +74,7 @@ export const verifyToken = async (req, res, next) => {
   }
 };
 
+// Middleware to validate login data with Joi
 export const verifyLogin = async (req, res, next) => {
   const { username, password } = req.body;
   // validated with inputs or body from frond whitJoi, also we can those:  Yup, Zod.

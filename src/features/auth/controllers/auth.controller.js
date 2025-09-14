@@ -40,6 +40,7 @@ export const login = async (req, res, next) => {
       result.user._id,
       result.token
     );
+
     if (!tokenDoc)
       return res
         .status(500)
@@ -59,7 +60,11 @@ export const login = async (req, res, next) => {
     When you do Fetch/Axios you have to send credentials: 
     'include' or withCredentials: true for the browser to attach cookies..
     */
-    return res.json({ ok: true, username: result.user.username });
+    return res.json({
+      ok: true,
+      username: result.user.username,
+      sub: result.user._id,
+    });
   } catch (err) {
     next(err);
   }

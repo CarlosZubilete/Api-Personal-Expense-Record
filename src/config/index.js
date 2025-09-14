@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-// 40c29cda-36ca-4611-ba87-7b2672d342ff
+
 export default {
   port: process.env.PORT || 3000,
   mongoUri: process.env.MONGO_URI,
