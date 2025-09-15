@@ -6,7 +6,7 @@ const router = Router();
 
 router.use(verifyToken); // all routes below require authentication
 
-router.post("/new", ctrl.create);
+router.post("/", ctrl.create);
 router.get("/", ctrl.findCollection); // only logged-in users can see purchases
 router.get("/:id", ctrl.findOne);
 router.patch("/:id", ctrl.updateOne);

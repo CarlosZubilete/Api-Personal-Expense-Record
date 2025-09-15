@@ -18,7 +18,7 @@ export const create = async (req, res) => {
 export const findCollection = async (req, res) => {
   try {
     const user = req.user.sub;
-    console.log("User ID from token:", user);
+    // console.log("User ID from token:", user);
     const result = await purchaseService.getList(user);
     return res.status(200).json({
       success: true,
