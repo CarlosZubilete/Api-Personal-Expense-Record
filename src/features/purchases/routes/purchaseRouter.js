@@ -4,8 +4,10 @@ import { verifyToken } from "../../auth/middlewares/auth.middleware.js";
 
 const router = Router();
 
+router.use(verifyToken); // all routes below require authentication
+
 router.post("/new", ctrl.create);
-router.get("/", verifyToken, ctrl.findCollection); // only logged-in users can see purchases
+router.get("/", ctrl.findCollection); // only logged-in users can see purchases
 router.get("/:id", ctrl.findOne);
 router.patch("/:id", ctrl.updateOne);
 router.delete("/:id", ctrl.deleteOne);

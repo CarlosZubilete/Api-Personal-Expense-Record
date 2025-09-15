@@ -11,7 +11,7 @@ const purchaseSchema = new mongoose.Schema(
       min: 0,
       required: true,
     },
-    user: {
+    user_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
       required: true,

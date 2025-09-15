@@ -2,7 +2,11 @@ import * as purchaseService from "../services/purchaseService.js";
 
 export const create = async (req, res) => {
   try {
-    const result = await purchaseService.createOne(req.body);
+    const payload = {
+      ...req.body,
+      user_id: req.user.sub, // assuming req.user is set by the auth middleware
+    };
+    const result = await purchaseService.createOne(payload);
     if (!result)
       return res.status(404).json({ message: "Purchase haven not created" });
     else res.status(200).json({ message: "Purchase create" });
@@ -13,7 +17,9 @@ export const create = async (req, res) => {
 
 export const findCollection = async (req, res) => {
   try {
-    const result = await purchaseService.getList();
+    const user = req.user.sub;
+    console.log("User ID from token:", user);
+    const result = await purchaseService.getList(user);
     return res.status(200).json({
       success: true,
       total: result.total,

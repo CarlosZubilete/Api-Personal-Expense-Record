@@ -5,10 +5,12 @@ export const createOne = async (payload) => {
   return document.save();
 };
 
-export const getList = async () => {
+export const getList = async (user_id) => {
+  const filter = { deleted: false, user_id: user_id };
+
   const [total, data] = await Promise.all([
-    Purchase.countDocuments({ deleted: false }),
-    Purchase.find({ deleted: false }).select({
+    Purchase.countDocuments(filter),
+    Purchase.find(filter).select({
       deleted: 0,
       createdAt: 0,
       updatedAt: 0,
