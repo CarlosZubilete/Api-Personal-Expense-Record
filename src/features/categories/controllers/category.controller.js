@@ -11,7 +11,7 @@ export const createCategory = async (req, res) => {
 
     if (!document)
       return res.status(404).json({ message: "Category haven not created" });
-    else res.status(200).json({ message: "Category created", data: document });
+    else res.status(200).json({ message: "Category created" });
   } catch (e) {
     res.status(400).json({ message: e.message });
   }

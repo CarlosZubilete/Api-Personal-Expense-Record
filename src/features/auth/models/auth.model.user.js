@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
     },
     passwordHash: { type: String, required: true },
     name: { type: String },
-    role: { type: String, default: "user" },
+    role: { type: String, enum: ["user", "admin"], default: "user" },
     deleted: { type: Boolean, default: false },
   },
   { timestamps: true }

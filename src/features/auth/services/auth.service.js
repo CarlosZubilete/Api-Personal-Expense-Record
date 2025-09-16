@@ -24,11 +24,11 @@ export const authenticate = async (username, password) => {
 
   // Generate a token - JSON-WebToken
   const payload = { sub: user._id, username: user.username, role: user.role };
-  const token = jwt.sign(payload, config.jwtSign, { expiresIn: "1h" });
+  const token = jwt.sign(payload, config.jwtSign, { expiresIn: "1h" }); // in 1 hour the token will expire
 
   // save token in a whitelist
-  //const tokenDoc = new Token({ user_id: user._id, token });
-  //await tokenDoc.save(); // todo: error handling and create a service for tokens
+  // const tokenDoc = new Token({ user_id: user._id, token });
+  // await tokenDoc.save(); // todo: error handling and create a service for tokens
   // await tokenService.createTokenDoc(user._id, token);
 
   return { user, token };

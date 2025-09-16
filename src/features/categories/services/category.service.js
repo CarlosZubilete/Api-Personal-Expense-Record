@@ -12,9 +12,10 @@ export const findAllByUser = async (user_id) => {
     Category.countDocuments(filter),
     Category.find(filter).select({
       deleted: 0,
+      user_id: 0,
       createdAt: 0,
       updatedAt: 0,
-      _v: 0,
+      __v: 0,
     }),
   ]);
   return { total, data };

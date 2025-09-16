@@ -1,6 +1,5 @@
 import * as authService from "../services/auth.service.js";
 import * as tokenService from "../services/token.service.js";
-// import { validateUser } from "../auth.validators.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -11,12 +10,9 @@ export const register = async (req, res, next) => {
       email,
       name,
     });
-    return (
-      res
-        .status(201)
-        // .json({ ok: true, data: { id: user._id, username: user.username } });
-        .json({ ok: true, data: { username: user.username } })
-    );
+    return res
+      .status(201)
+      .json({ ok: true, data: { username: user.username } });
   } catch (err) {
     if (err.code === 11000)
       return res
@@ -55,11 +51,6 @@ export const login = async (req, res, next) => {
       // path: '/', domain: 'your-dns' , if you like
     });
 
-    /* 
-    Note: if your frontend is on another domain, 
-    When you do Fetch/Axios you have to send credentials: 
-    'include' or withCredentials: true for the browser to attach cookies..
-    */
     return res.json({
       ok: true,
       username: result.user.username,

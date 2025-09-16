@@ -19,7 +19,7 @@ const purchaseSchema = new mongoose.Schema(
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "categories", //
-      required: false, // todo: create a default category "Un-categorized"
+      required: true,
     },
     deleted: {
       type: Boolean,

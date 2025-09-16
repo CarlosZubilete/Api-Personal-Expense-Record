@@ -41,13 +41,7 @@ export const validateUser = async (req, res, next) => {
 };
 
 export const verifyToken = async (req, res, next) => {
-  // const authHeader = req.headers.authorization;
-  // console.log(authHeader);
-  // if (!authHeader)
-  //   return res.status(401).json({ ok: false, message: "No token" });
   try {
-    // const token = authHeader.split(" ")[1]; // "Bearer <token>"
-    //console.log(token);
     const token = req.cookies.access_token;
     // console.log(token);
     if (!token) return res.status(403).json({ ok: false, message: "No token" });
@@ -90,11 +84,34 @@ export const verifyLogin = async (req, res, next) => {
     });
 };
 
+export const requireRole = (role) => {
+  return (req, res, next) => {
+    if (!req.user)
+      return res.status(401).json({ ok: false, message: "No token" });
+    if (req.user.role !== role)
+      return res
+        .status(403)
+        .json({ ok: false, message: "Forbidden: insufficient privileges" });
+    next();
+  };
+};
+
+export const requireAnyRole = (roles = []) => {
+  return (req, res, next) => {
+    if (!req.user)
+      return res.status(401).json({ ok: false, message: "No token" });
+    if (!roles.includes(req.user.role))
+      return res
+        .status(403)
+        .json({ ok: false, message: "Forbidden: insufficient privileges" });
+    next();
+  };
+};
+
 // export default function authMiddleware(req, res, next) {
 //   const authHeader = req.headers.authorization;
 //   if (!authHeader)
 //     return res.status(401).json({ ok: false, message: "No token" });
-
 //   const token = authHeader.split(" ")[1]; // "Bearer <token>"
 //   try {
 //     const payload = jwt.verify(token, config.jwtSecret);
@@ -104,11 +121,3 @@ export const verifyLogin = async (req, res, next) => {
 //     return res.status(401).json({ ok: false, message: "Invalid token" });
 //   }
 // }
-
-/*
-import authMiddleware from "./middlewares/authMiddleware.js";
-app.get("/protected", authMiddleware, (req, res) => {
-  res.json({ ok: true, user: req.user });
-});
-
-*/
