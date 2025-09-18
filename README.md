@@ -1,117 +1,78 @@
-# Personal Expense Record API
+# API de Registro de Gastos Personales
 
-A RESTful API for managing personal expenses built with Node.js, Express, and MongoDB.
+Una API RESTful para gestionar gastos personales, desarrollada con Node.js, Express y MongoDB.
 
-## Features
+## Descripción
 
-- 🔐 User Authentication (Register/Login/Logout)
-- 💰 Expense Management
-- 🔒 JWT Token-based Authorization
-- ✅ Input Validation
-- 📝 CRUD Operations for Purchases
+Este proyecto tiene como objetivo proporcionar una solución sencilla y eficiente para registrar y gestionar los gastos personales. La API permite a los usuarios autenticarse, registrar sus compras y realizar operaciones CRUD sobre ellas. Además, incluye características de seguridad como autenticación basada en tokens JWT y validación de entradas.
 
-## Project Structure
+## Tecnologías utilizadas
 
-```
-src/
-├── config/          # Configuration files
-├── features/        # Feature modules
-│   ├── auth/        # Authentication feature
-│   │   ├── controllers/
-│   │   ├── middlewares/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   └── validators/
-│   └── purchases/   # Purchases feature
-│       ├── controllers/
-│       ├── models/
-│       ├── routes/
-│       └── services/
-├── app.js          # Express app setup
-└── server.js       # Server entry point
-```
+- **Node.js**: Entorno de ejecución para JavaScript.
+- **Express**: Framework para construir aplicaciones web y APIs.
+- **MongoDB**: Base de datos NoSQL para almacenar los datos.
+- **JWT**: Para la autenticación y autorización segura.
+- **bcrypt**: Para el hashing de contraseñas.
 
-## Getting Started
+## Instalación
 
-### Prerequisites
+Sigue estos pasos para instalar y configurar el proyecto:
 
-- Node.js
-- MongoDB
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
+1. Clona el repositorio:
 
 ```bash
 git clone https://github.com/CarlosZubilete/Api-Personal-Expense-Record.git
 cd Api-Personal-Expense-Record
 ```
 
-2. Install dependencies
+2. Instala las dependencias:
 
 ```bash
 npm install
 ```
 
-3. Set up environment variables
-   Create a `.env` file in the root directory and add:
+3. Configura las variables de entorno:
+   Crea un archivo `.env` en el directorio raíz y añade las siguientes variables:
 
 ```
 PORT=3000
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
+MONGODB_URI=tu_cadena_de_conexión_a_mongodb
+JWT_SECRET=tu_secreto_jwt
 ```
 
-4. Start the server
+4. Inicia el servidor:
 
 ```bash
 npm start
 ```
 
-## API Endpoints
+## Uso
 
-### Authentication
+Para usar la API, asegúrate de que el servidor esté en ejecución y que tengas configurada una base de datos MongoDB. Los endpoints principales son:
 
-- POST `/auth/register` - Register a new user
-- POST `/auth/login` - User login
-- POST `/auth/logout` - User logout
+### Autenticación
 
-### Purchases
+- **POST** `/auth/register`: Registrar un nuevo usuario.
+- **POST** `/auth/login`: Iniciar sesión.
+- **POST** `/auth/logout`: Cerrar sesión.
 
-- POST `/purchases/new` - Create a new purchase
-- GET `/purchases` - Get all purchases (requires authentication)
-- GET `/purchases/:id` - Get a specific purchase
-- PATCH `/purchases/:id` - Update a purchase
-- DELETE `/purchases/:id` - Delete a purchase
+### Compras
 
-## Architecture
+- **POST** `/purchases/new`: Crear una nueva compra.
+- **GET** `/purchases`: Obtener todas las compras (requiere autenticación).
+- **GET** `/purchases/:id`: Obtener una compra específica.
+- **PATCH** `/purchases/:id`: Actualizar una compra.
+- **DELETE** `/purchases/:id`: Eliminar una compra.
 
-The project follows a modular architecture with separate concerns:
+## Autor / Contacto
 
-- **Controllers**: Handle HTTP requests and responses
-- **Services**: Contain business logic
-- **Models**: Define data schemas
-- **Routes**: Define API endpoints
-- **Middlewares**: Handle authentication and validation
-- **Validators**: Input validation schemas
-
-## Security Features
-
-- Password hashing
-- JWT token authentication
-- Input validation
-- Token invalidation on logout
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Este proyecto fue desarrollado por **Carlos Zubilete**.  
+Si tienes preguntas o sugerencias, puedes contactarme a través de mi [GitHub](https://github.com/CarlosZubilete).
 
 ## License
 
 This project is licensed under the MIT License.
+
+```
+
+```
